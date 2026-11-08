@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0a14">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="方程式默写：给一句反应描述，写出化学方程式、反应条件与离子方程式，逐题判对错。">
+<title>方程式默写 · 化学反应</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23120f22'/%3E%3Cpath d='M16 6l8.7 5v10L16 26l-8.7-5V11z' fill='none' stroke='%23b9a6ff' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="./style.css?v=20261108a">
+</head>
+<body>
+
+<div class="app">
+
+  <header class="bar">
+    <!-- 做题＝「结果」（转成本轮结算），首页／结算＝「门户」（真链接 ../），速查＝「首页」 -->
+    <a class="back" id="btnBack" href="../" aria-label="回门户">
+      <span class="arw" aria-hidden="true">←</span><span class="tx" id="backTx">门户</span>
+    </a>
+    <span class="tag">CHEM</span>
+    <span class="brand">方程式默写</span>
+    <span class="grow"></span>
+    <span class="mini" id="barMini">68</span>
+  </header>
+
+  <main>
+
+    <!-- ========== 首页 ========== -->
+    <section class="view" id="vHome">
+      <div class="hero">
+        <div class="mol" aria-hidden="true">
+          <svg viewBox="0 0 100 100" role="presentation">
+            <polygon class="hex" points="50,15 80.3,32.5 80.3,67.5 50,85 19.7,67.5 19.7,32.5"/>
+            <circle class="core" cx="50" cy="50" r="13"/>
+            <path class="bond" d="M50,37V24M63,50h13M37,50H24"/>
+          </svg>
+        </div>
+        <div class="hero-txt">
+          <h1>化学反应</h1>
+          <p class="lede">一句反应描述，写出化学方程式和反应条件；<br>有离子式的题，再补一条离子方程式。</p>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="st"><b id="stDone">0</b><span>已练</span></div>
+        <div class="st"><b id="stAcc">—</b><span>正确率</span></div>
+        <div class="st"><b id="stWrong">0</b><span>错题本</span></div>
+      </div>
+
+      <button class="sw" id="swIon" type="button" role="switch" aria-checked="true">
+        <span class="sw-t">连离子方程式一起练</span>
+        <span class="sw-d">关掉就只写化学方程式</span>
+        <i class="knob" aria-hidden="true"></i>
+      </button>
+
+      <div class="modes">
+        <button class="btn primary" type="button" data-go="all">
+          <span>全部练一轮</span><i id="allN">68</i>
+        </button>
+        <button class="btn" type="button" data-go="wrong" id="btnWrongMode">
+          <span>只练错题</span><i id="wrongN">0</i>
+        </button>
+      </div>
+
+      <div class="sec">
+        <h2>按类练<span id="catHint">5 类</span></h2>
+        <div class="cats" id="cats"></div>
+      </div>
+
+      <div class="sec">
+        <h2>答案速查<span>写不出来时先看，不等于练过</span></h2>
+        <button class="btn ghost" type="button" id="btnList">
+          <span>打开全部答案</span><i id="listN">68</i>
+        </button>
+      </div>
+
+      <p class="foot">题目按人教版必修、选修常见反应手写，共 <b id="footN">68</b> 条，欢迎对着课本挑错。做题记录只存在这台设备的浏览器里。<span class="ver" id="ver"></span></p>
+    </section>
+
+    <!-- ========== 做题 ========== -->
+    <section class="view" id="vQuiz" hidden>
+      <div class="qbar">
+        <span class="qi" id="qi">1 / 68</span>
+        <div class="pbar"><i id="pfill"></i></div>
+        <span class="qe" id="qe">错 0</span>
+      </div>
+
+      <div class="qcard">
+        <p class="qpos" id="qpos"></p>
+        <p class="qzh" id="qzh"></p>
+
+        <label class="flab" for="eq">① 化学方程式</label>
+        <input id="eq" class="fld" type="text" autocomplete="off" autocapitalize="off"
+               autocorrect="off" spellcheck="false" enterkeyhint="done"
+               placeholder="如 2Na+2H₂O=2NaOH+H₂↑">
+
+        <p class="flab" id="condLab">② 反应条件<em>没有就不选</em></p>
+        <div class="conds" id="conds"></div>
+
+        <div id="ionWrap" hidden>
+          <label class="flab" for="ion">③ 离子方程式</label>
+          <input id="ion" class="fld" type="text" autocomplete="off" autocapitalize="off"
+                 autocorrect="off" spellcheck="false" enterkeyhint="done"
+                 placeholder="拆离子，删两边相同的">
+        </div>
+
+        <div class="fb" id="fb" hidden></div>
+      </div>
+
+      <div class="keys" id="keys">
+        <button class="btn small" type="button" id="btnHint">提示</button>
+        <button class="btn small" type="button" id="btnShow">看答案</button>
+        <button class="btn small ghost" type="button" id="btnSkip">跳过</button>
+        <button class="btn small next" type="button" id="btnNext" hidden>下一题</button>
+      </div>
+    </section>
+
+    <!-- ========== 结算 ========== -->
+    <section class="view" id="vDone" hidden>
+      <div class="done-head">
+        <div class="ring" id="ring"><span id="rPct">0%</span></div>
+        <div class="done-txt">
+          <h2 id="rTitle">—</h2>
+          <p id="rSub">—</p>
+        </div>
+      </div>
+
+      <div class="sec" id="rWrongSec">
+        <h2>这轮错的<span id="rWrongN">0 个</span></h2>
+        <div class="wlist" id="rWrong"></div>
+      </div>
+
+      <div class="modes">
+        <button class="btn primary" type="button" id="rRetry" hidden>
+          <span>重练这些</span><i id="rRetryN">0</i>
+        </button>
+        <button class="btn" type="button" id="rAgain">整轮再来</button>
+        <button class="btn ghost" type="button" id="rHome">回首页</button>
+      </div>
+    </section>
+
+    <!-- ========== 答案速查 ========== -->
+    <section class="view" id="vList" hidden>
+      <div class="list-head">
+        <h2>全部答案<span id="lN">68 条</span></h2>
+        <p>先自己写，再对照。条件写在箭头上方，「加热 △」就是平时写的 △。</p>
+      </div>
+      <div id="listBody"></div>
+    </section>
+
+  </main>
+</div>
+
+<script src="./data.js?v=20261108a"></script>
+<script src="./app.js?v=20261108a"></script>
+</body>
+</html>
